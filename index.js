@@ -8,26 +8,29 @@ const main = async () => {
 
     console.log('Current version: ', currentVersion);
 
-    const nameToGreet = core.getInput('who-to-greet');
+    const [major, minor, fix] = currentVersion.split('.');
+
     const commits = github.context.payload.commits;
 
     let nextVersion = 0;
 
     commits.forEach((commit) => {
-        console.log(commit.message, nextVersion, commit.message.match(/^fix(\w+):/))
-        if(commit.message.match(/^fix\(\w+\):/)) {
+        console.log('analyzing: ', commit.message)
+        if (commit.message.match(/^fix\(\w+\):/)) {
             nextVersion = nextVersion === 0 ? 1 : nextVersion;
+            console.log('changes status to fix');
         } else if (commit.message.match(/^feat\(\w+\):/)) {
             nextVersion = 2;
+            console.log('changes status to feat')
         }
     })
 
-    if(nextVersion === 0) {
-        console.log('no version will be released')
-    } else if(nextVersion === 1) {
-        console.log('next version is fix')
+    if (nextVersion === 0) {
+        console.log('no version will be released ', `${major}.${minor}.${fix}`)
+    } else if (nextVersion === 1) {
+        console.log('next version is fix ', `${major}.${minor}.${fix + 1}`)
     } else {
-        console.log('next version is feature')
+        console.log('next version is feature ', `${major}.${minor + 1}.${0}`)
     }
 }
 
