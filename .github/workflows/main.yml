@@ -1,16 +1,14 @@
-on: [push]
+on: [pull_request]
 
 jobs:
   github-action-show-version:
     runs-on: ubuntu-latest
-    name: Next version
+    name: Next version is
     steps:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Hello world action step
+      - name: Analyze commits
         uses: ./ # Uses an action in the root directory
         id: hello
-        with:
-          who-to-greet: 'Mona the Octocat'
