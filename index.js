@@ -1,10 +1,9 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-
 const { readFileSync } = require('fs')
 
 const main = async () => {
-    const file = fs.readFileSync('package.json');
+    const file = readFileSync('package.json');
     const currentVersion = JSON.parse(file).version;
 
     console.log('Current version: ', currentVersion);
