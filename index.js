@@ -8,7 +8,7 @@ try {
     let nextVersion = 0;
 
     commits.forEach((commit) => {
-        console.log(commit.message, nextVersion)
+        console.log(commit.message, nextVersion, commit.message.match(/^fix(\w+):/))
         if(commit.message.match(/^fix(\w+):/)) {
             nextVersion = nextVersion === 0 ? 1 : nextVersion;
         } else if (commit.message.match(/^feat(\w+):/)) {
