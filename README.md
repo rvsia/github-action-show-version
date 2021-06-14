@@ -18,6 +18,6 @@ The time we greeted you.
 
 ```
 uses: actions/github-action-show-version@v1.0
-with:
+with:asdas
   who-to-greet: 'Mona the Octocat'
 ```
