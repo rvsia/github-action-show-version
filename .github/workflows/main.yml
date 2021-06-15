@@ -9,9 +9,6 @@ jobs:
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Logging
-        run: |
-          echo "${{toJSON(github.event.commits[0])}}"
       - name: Analyze commits
         uses: ./ # Uses an action in the root directory
         id: hello
