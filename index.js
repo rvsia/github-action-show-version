@@ -10,9 +10,7 @@ const main = async () => {
 
     const [major, minor, fix] = currentVersion.split('.');
 
-    console.log(JSON.stringify(github.context.payload, null, 2))
-
-    const commits = github.context.payload.commits;
+    const commits = await fetch(github.context.payload.pull_request.commits_url).then(data => data.json())
 
     let nextVersion = 0;
 
