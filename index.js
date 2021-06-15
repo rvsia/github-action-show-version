@@ -13,11 +13,9 @@ const main = async () => {
 
     const commits = await fetch(github.context.payload.pull_request.commits_url).then(data => data.json())
 
-    console.log('commits', commits)
-
     let nextVersion = 0;
 
-    commits.forEach((commit) => {
+    commits.forEach(({commit}) => {
         console.log('analyzing: ', commit.message)
         if (commit.message.match(/^fix\(\w+\):/)) {
             nextVersion = nextVersion === 0 ? 1 : nextVersion;
