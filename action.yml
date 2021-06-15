@@ -1,5 +1,7 @@
 name: 'Show Version'
 description: 'Greet someone and record the time'
+branding:
+  icon: upload
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
