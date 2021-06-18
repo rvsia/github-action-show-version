@@ -1,13 +1,20 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { readFileSync } = require('fs')
 const fetch = require('node-fetch');
 
 const main = async () => {
-    const file = readFileSync('package.json');
-    const currentVersion = JSON.parse(file).version;
     const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
     const octokit = github.getOctokit(GITHUB_TOKEN);
+
+    const { context = {} } = github;
+    const { pull_request } = context.payload;
+
+    const tags = await octokit.rest.repos.listTags({
+        ...context.repo,
+        branch: 'master',
+    });
+
+    const currentVersion = tags.data[0].name.replace(/\^v/, '');
 
     console.log('Current version: ', currentVersion);
 
@@ -41,9 +48,6 @@ const main = async () => {
         message = `A new version (feat) will be released: ${major}.${Number(minor) + 1}.${0} ${RESPONDER}`;
         console.log(message)
     }
-
-    const { context = {} } = github;
-    const { pull_request } = context.payload;
 
     const comments = await octokit.rest.issues.listComments({
         ...context.repo,
