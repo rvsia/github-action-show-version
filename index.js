@@ -50,17 +50,21 @@ const main = async () => {
         issue_number: pull_request.number,
     });
 
-    console.log(comments.data)
-
     const comment = comments.data.find(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(RESPONDER));
 
-    console.log(comment);
-
-    await octokit.rest.issues.createComment({
-        ...context.repo,
-        issue_number: pull_request.number,
-        body: message
-    });
+    if(comment) {
+        await octokit.rest.issues.updateComment({
+            ...context.repo,
+            comment_id: comment.id,
+            body: message
+        });
+    } else {
+        await octokit.rest.issues.createComment({
+            ...context.repo,
+            issue_number: pull_request.number,
+            body: message
+        });
+    }
 }
 
 main().catch(error => core.setFailed(error.message));
