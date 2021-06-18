@@ -28,15 +28,17 @@ const main = async () => {
         }
     })
 
-    let message = `No new version will be released. Current: ${major}.${minor}.${fix}`;
+    const RESPONDER = `[github-action-show-version]`;
+
+    let message = `No new version will be released. Current: ${major}.${minor}.${fix} ${RESPONDER}`;
 
     if (nextVersion === 0) {
         console.log(message)
     } else if (nextVersion === 1) {
-        message = `A new version (fix) will be released: ${major}.${minor}.${Number(fix) + 1}`;
+        message = `A new version (fix) will be released: ${major}.${minor}.${Number(fix) + 1} ${RESPONDER}`;
         console.log(message)
     } else {
-        message = `A new version (feat) will be released: ${major}.${Number(minor) + 1}.${0}`;
+        message = `A new version (feat) will be released: ${major}.${Number(minor) + 1}.${0} ${RESPONDER}`;
         console.log(message)
     }
 
@@ -48,7 +50,9 @@ const main = async () => {
         issue_number: pull_request.number,
     });
 
-    console.log(comments);
+    const comment = comments.data.find(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(RESPONDER));
+
+    console.log(comment);
 
     await octokit.rest.issues.createComment({
         ...context.repo,
