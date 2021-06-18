@@ -1,25 +1,19 @@
-# Hello world javascript action
+# GitHub action show version
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action comments a PR with the next released version based on semantic release (feat, fix).
 
 ## Inputs
 
-### `who-to-greet`
+### `GITHUB_TOKEN`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Required** A GitHub token.
 
-## Outputs
-
-### `time`
-
-The time we greeted you.
-
-## Example usage 
+## Example usage
 
 ```
 uses: actions/github-action-show-version@v1.0
+name: Comment new version
+id: hello
 with:
-  who-to-greet: 'Mona the Octocat'
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 ```
-
-POKUS CHANGE  s

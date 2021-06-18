@@ -1,12 +1,6 @@
 name: 'Show Version'
-description: 'Greet someone and record the time'
-branding:
-  icon: upload
+description: 'Show the next version in the comments'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
   GITHUB_TOKEN:
     description: 'GitHub token'
     required: true
