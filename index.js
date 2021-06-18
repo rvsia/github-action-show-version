@@ -45,7 +45,7 @@ const main = async () => {
 
     console.log(octokit);
 
-    await octokit.issues.createComment({
+    await octokit.rest.actions.issues.createComment({
         ...context.repo,
         issue_number: pull_request.number,
         body: message
