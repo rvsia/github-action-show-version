@@ -28,34 +28,28 @@ const main = async () => {
         }
     })
 
+    let message = `No new version will be released. Current: ${major}.${minor}.${fix}`;
+
     if (nextVersion === 0) {
-        const { context = {} } = github;
-        const { pull_request } = context.payload;
-        await octokit.issues.createComment({
-            ...context.repo,
-            issue_number: pull_request.number,
-            body: 'No new version will be released.'
-        });
-        console.log('no version will be released ', `${major}.${minor}.${fix}`)
+        console.log(message)
     } else if (nextVersion === 1) {
-        const { context = {} } = github;
-        const { pull_request } = context.payload;
-        await octokit.issues.createComment({
-            ...context.repo,
-            issue_number: pull_request.number,
-            body: `A new version (fix) will be released: ${major}.${minor}.${fix + 1}`
-        });
-        console.log('next version is fix ', `${major}.${minor}.${fix + 1}`)
+        message = `A new version (fix) will be released: ${major}.${minor}.${fix + 1}`;
+        console.log(message)
     } else {
-        const { context = {} } = github;
-        const { pull_request } = context.payload;
-        await octokit.issues.createComment({
-            ...context.repo,
-            issue_number: pull_request.number,
-            body: `A new version (feat) will be released: ${major}.${minor + 1}.${0}`
-        });
-        console.log('next version is feature ', `${major}.${minor + 1}.${0}`)
+        message = `A new version (feat) will be released: ${major}.${minor + 1}.${0}`;
+        console.log(message)
     }
+
+    const { context = {} } = github;
+    const { pull_request } = context.payload;
+
+    console.log(octokit);
+
+    await octokit.issues.createComment({
+        ...context.repo,
+        issue_number: pull_request.number,
+        body: message
+    });
 }
 
 main().catch(error => core.setFailed(error.message));
