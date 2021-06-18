@@ -2,7 +2,6 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { readFileSync } = require('fs')
 const fetch = require('node-fetch');
-const github = require('@actions/github');
 
 const main = async () => {
     const file = readFileSync('package.json');
