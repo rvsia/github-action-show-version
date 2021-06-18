@@ -43,7 +43,10 @@ const main = async () => {
     const { context = {} } = github;
     const { pull_request } = context.payload;
 
-    const comments = await octokit.rest.issues.listComments();
+    const comments = await octokit.rest.issues.listComments({
+        ...context.repo,
+        issue_number: pull_request.number,
+    });
 
     await octokit.rest.issues.createComment({
         ...context.repo,
