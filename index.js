@@ -48,6 +48,8 @@ const main = async () => {
         issue_number: pull_request.number,
     });
 
+    console.log(comments);
+
     await octokit.rest.issues.createComment({
         ...context.repo,
         issue_number: pull_request.number,
