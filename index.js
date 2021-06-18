@@ -2,10 +2,13 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { readFileSync } = require('fs')
 const fetch = require('node-fetch');
+const github = require('@actions/github');
 
 const main = async () => {
     const file = readFileSync('package.json');
     const currentVersion = JSON.parse(file).version;
+    const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
+    const octokit = github.getOctokit(GITHUB_TOKEN);
 
     console.log('Current version: ', currentVersion);
 
@@ -27,10 +30,31 @@ const main = async () => {
     })
 
     if (nextVersion === 0) {
+        const { context = {} } = github;
+        const { pull_request } = context.payload;
+        await octokit.issues.createComment({
+            ...context.repo,
+            issue_number: pull_request.number,
+            body: 'No new version will be released.'
+        });
         console.log('no version will be released ', `${major}.${minor}.${fix}`)
     } else if (nextVersion === 1) {
+        const { context = {} } = github;
+        const { pull_request } = context.payload;
+        await octokit.issues.createComment({
+            ...context.repo,
+            issue_number: pull_request.number,
+            body: `A new version (fix) will be released: ${major}.${minor}.${fix + 1}`
+        });
         console.log('next version is fix ', `${major}.${minor}.${fix + 1}`)
     } else {
+        const { context = {} } = github;
+        const { pull_request } = context.payload;
+        await octokit.issues.createComment({
+            ...context.repo,
+            issue_number: pull_request.number,
+            body: `A new version (feat) will be released: ${major}.${minor + 1}.${0}`
+        });
         console.log('next version is feature ', `${major}.${minor + 1}.${0}`)
     }
 }

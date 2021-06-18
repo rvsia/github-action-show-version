@@ -12,3 +12,5 @@ jobs:
       - name: Analyze commits
         uses: ./ # Uses an action in the root directory
         id: hello
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
