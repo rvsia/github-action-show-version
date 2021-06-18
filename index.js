@@ -43,6 +43,8 @@ const main = async () => {
     const { context = {} } = github;
     const { pull_request } = context.payload;
 
+    console.log(octokit.rest.issues);
+
     await octokit.rest.issues.createComment({
         ...context.repo,
         issue_number: pull_request.number,
