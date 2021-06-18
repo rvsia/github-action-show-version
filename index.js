@@ -50,6 +50,8 @@ const main = async () => {
         issue_number: pull_request.number,
     });
 
+    console.log(comments.data)
+
     const comment = comments.data.find(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(RESPONDER));
 
     console.log(comment);
