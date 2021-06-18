@@ -33,10 +33,10 @@ const main = async () => {
     if (nextVersion === 0) {
         console.log(message)
     } else if (nextVersion === 1) {
-        message = `A new version (fix) will be released: ${major}.${minor}.${fix + 1}`;
+        message = `A new version (fix) will be released: ${major}.${minor}.${Number(fix) + 1}`;
         console.log(message)
     } else {
-        message = `A new version (feat) will be released: ${major}.${minor + 1}.${0}`;
+        message = `A new version (feat) will be released: ${major}.${Number(minor) + 1}.${0}`;
         console.log(message)
     }
 
