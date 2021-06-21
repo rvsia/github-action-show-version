@@ -35,7 +35,7 @@ const main = async () => {
         }
     })
 
-    const RESPONDER = `[github-action-show-version]`;
+    const RESPONDER = `[DataDrivenFormsBot]`;
 
     let message = `No new version will be released. Current: ${major}.${minor}.${fix} ${RESPONDER}`;
 
@@ -56,9 +56,7 @@ const main = async () => {
 
     const comment = comments.data.find(comment => comment.user.login === 'DataDrivenFormsBot' && comment.body.includes(RESPONDER));
 
-    if(context.repo.owner === 'data-driven-forms' && context.repo.repo === 'react-forms' && (
-        comment && comment.body !== message
-    )) {
+    if(context.repo.owner === 'data-driven-forms' && context.repo.repo === 'react-forms' && ((comment && comment.body !== message) || !comment)) {
         await fetch('https://us-central1-data-driven-forms.cloudfunctions.net/sendComment', {
             method: 'POST', body: {
                 message,
