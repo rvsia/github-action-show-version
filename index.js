@@ -3,8 +3,7 @@ const github = require('@actions/github');
 const fetch = require('node-fetch');
 
 const main = async () => {
-    const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
-    const octokit = github.getOctokit(GITHUB_TOKEN);
+    const octokit = github.getOctokit();
 
     const { context = {} } = github;
     const { pull_request } = context.payload;
@@ -56,18 +55,14 @@ const main = async () => {
 
     const comment = comments.data.find(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(RESPONDER));
 
-    if(comment) {
-        await octokit.rest.issues.updateComment({
-            ...context.repo,
-            comment_id: comment.id,
-            body: message
-        });
-    } else {
-        await octokit.rest.issues.createComment({
-            ...context.repo,
-            issue_number: pull_request.number,
-            body: message
-        });
+    if(repo.owner === 'data-driven-forms' && repo.repo === 'react-forms') {
+        await fetch('https://us-central1-data-driven-forms.cloudfunctions.net/sendComment', {
+            method: 'POST', body: {
+                message,
+                issueNumber: pull_request.number,
+                commentId: comment && comment.id
+            }
+        })
     }
 }
 

@@ -1,12 +1,5 @@
 name: 'Show Version'
 description: 'Show the next version in the comments'
-inputs:
-  GITHUB_TOKEN:
-    description: 'GitHub token'
-    required: true
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'node12'
   main: 'index.js'
