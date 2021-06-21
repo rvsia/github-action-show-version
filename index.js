@@ -58,11 +58,13 @@ const main = async () => {
 
     if(context.repo.owner === 'data-driven-forms' && context.repo.repo === 'react-forms' && ((comment && comment.body !== message) || !comment)) {
         await fetch('https://us-central1-data-driven-forms.cloudfunctions.net/sendComment', {
-            method: 'POST', body: {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
                 message,
                 issueNumber: pull_request.number,
                 commentId: comment && comment.id
-            }
+            })
         })
     }
 }
