@@ -3,7 +3,8 @@ const github = require('@actions/github');
 const fetch = require('node-fetch');
 
 const main = async () => {
-    const octokit = github.getOctokit();
+    const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN');
+    const octokit = github.getOctokit(GITHUB_TOKEN);
 
     const { context = {} } = github;
     const { pull_request } = context.payload;

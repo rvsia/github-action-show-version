@@ -1,5 +1,9 @@
 name: 'Show Version'
 description: 'Show the next version in the comments'
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub token'
+    required: true
 runs:
   using: 'node12'
   main: 'index.js'
