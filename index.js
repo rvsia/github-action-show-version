@@ -56,7 +56,7 @@ const main = async () => {
 
     const comment = comments.data.find(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(RESPONDER));
 
-    if(repo.owner === 'data-driven-forms' && repo.repo === 'react-forms' && (
+    if(context.repo.owner === 'data-driven-forms' && context.repo.repo === 'react-forms' && (
         commit && commit.body !== message
     )) {
         await fetch('https://us-central1-data-driven-forms.cloudfunctions.net/sendComment', {
