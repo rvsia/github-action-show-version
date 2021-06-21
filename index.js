@@ -54,10 +54,10 @@ const main = async () => {
         issue_number: pull_request.number,
     });
 
-    const comment = comments.data.find(comment => comment.user.login === 'github-actions[bot]' && comment.body.includes(RESPONDER));
+    const comment = comments.data.find(comment => comment.user.login === 'DataDrivenFormsBot' && comment.body.includes(RESPONDER));
 
     if(context.repo.owner === 'data-driven-forms' && context.repo.repo === 'react-forms' && (
-        commit && commit.body !== message
+        comment && comment.body !== message
     )) {
         await fetch('https://us-central1-data-driven-forms.cloudfunctions.net/sendComment', {
             method: 'POST', body: {
